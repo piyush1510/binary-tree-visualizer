@@ -4,7 +4,7 @@ import BST from './BST';
 export default class Canvas extends Component {
     constructor(props){
         super(props)
-        console.log(props);
+        console.log(props.input);
     }
     draw(ctx, x, y, node, w) {
         ctx.beginPath();
@@ -32,14 +32,27 @@ export default class Canvas extends Component {
         }
       }
       componentDidMount() {
+        
         const canvas = document.querySelector('#board');
         canvas.width = window.screen.width * 0.8;
-        canvas.height = window.screen.height * 0.8;
+        canvas.height = window.screen.height * 0.6;
         const ctx = canvas.getContext('2d');
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
         var w = canvas.offsetWidth;
         var tree = new BST();
         this.props.input.map(i=>tree.insert(i))
-        
+        if(tree.root)
+        this.draw(ctx, parseInt(w / 2), 30, tree.root, w*0.2);
+        // console.log(tree);
+        // tree.inOrder();
+      }
+      componentDidUpdate() {
+        const canvas = document.querySelector('#board');
+        const ctx = canvas.getContext('2d');
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        var w = canvas.offsetWidth;
+        var tree = new BST();
+        this.props.input.map(i=>tree.insert(i))
         if(tree.root)
         this.draw(ctx, parseInt(w / 2), 30, tree.root, w*0.2);
         // console.log(tree);
