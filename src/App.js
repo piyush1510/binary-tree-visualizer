@@ -6,27 +6,35 @@ export default class App extends Component {
   // constructor(props) {
   //   super(props);
   // }
-  draw(ctx, x, y, node,w) {
+  draw(ctx, x, y, node, w) {
     ctx.beginPath();
     ctx.strokeStyle = '#fff';
     ctx.arc(x, y, 20, 0, 2 * Math.PI);
     ctx.stroke();
     ctx.beginPath();
-    ctx.fillStyle = "#fff";
-    ctx.font="normal 20px Arial";
-    ctx.textAlign="center"
-    ctx.fillText(node.data.toString(),x,y+8)
-    if(node.left){
-      this.draw(ctx,x-w,y+100,node.left,w*0.6)
+    ctx.fillStyle = '#fff';
+    ctx.font = 'normal 20px Arial';
+    ctx.textAlign = 'center';
+    ctx.fillText(node.data.toString(), x, y + 8);
+    if (node.left) {
+      ctx.beginPath();
+      ctx.moveTo(x, y);
+      ctx.lineTo(x - w, y + 100);
+      ctx.stroke();
+      this.draw(ctx, x - w, y + 100, node.left, w * 0.6);
     }
-    if(node.right){
-      this.draw(ctx,x+w,y+100,node.right,w*0.6)
+    if (node.right) {
+      ctx.beginPath();
+      ctx.moveTo(x, y);
+      ctx.lineTo(x + w, y + 100);
+      ctx.stroke();
+      this.draw(ctx, x + w, y + 100, node.right, w * 0.6);
     }
   }
   componentDidMount() {
     const canvas = document.querySelector('#board');
-    canvas.width=500;
-    canvas.height=window.screen.height*0.8;
+    canvas.width = window.screen.width * 0.8;
+    canvas.height = window.screen.height * 0.8;
     const ctx = canvas.getContext('2d');
     var w = canvas.offsetWidth;
     var tree = new BST();
@@ -40,7 +48,7 @@ export default class App extends Component {
     tree.insert(5);
     tree.insert(9);
     tree.insert(27);
-    this.draw(ctx, parseInt(w / 2), 30, tree.root,100);
+    this.draw(ctx, parseInt(w / 2), 30, tree.root, 100);
     // console.log(tree);
     // tree.inOrder();
   }
